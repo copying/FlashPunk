@@ -6,7 +6,9 @@ package net.flashpunk
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
+	import flash.utils.Timer;
 	
 	/**
 	 * Main class that allows FlashPunk to run.
@@ -15,6 +17,17 @@ package net.flashpunk
 	 */
 	public class Engine extends MovieClip
 	{
+		/**
+		 * The number of frames that can be skiped before forcing to render.
+		 * If it's 0, it doesn't have limit.
+		 */
+		public var maxFrameSkip:uint = 5;
+		
+		/**
+		 * The frame rate of the game (in frames per second).
+		 */
+		public final function get frameRate():Number { return _tickRate; }
+		
 		/**
 		 * Time elapsed between this and the last tick in seconds.
 		 */
@@ -33,7 +46,12 @@ package net.flashpunk
 		public function Engine(screen:Screen, initialWorld:World, frameRate:Number = 60, fixed:Boolean = false) 
 		{
 			//sets the arguments
+			addWorld(initialWorld || new World);
+			addScreen(screen, _worlds[0]);
+			
+			
 			_tickRate = frameRate;
+			_tickLength = 1000 / frameRate;
 			_fixed = fixed;
 			
 			//Waits untill it's added to the stage
@@ -54,8 +72,110 @@ package net.flashpunk
 			stage.displayState = StageDisplayState.NORMAL;
 		}
 		
-		protected function begin():void { }
+	//overridable events
+		/**
+		 * Called right before the engine main loop starts running.
+		 */
+		protected function init():void { }
 		
+	//world functions
+		
+		/**
+		 * Adds an extra world (don't chage, adds another one).
+		 * @param	world	World to be added.
+		 */
+		public final function addWorld(world:World):void
+		{
+			if (!world || world.added)
+			{
+				throw new Error("World must exist and not already be added.");
+				return;
+			}
+			
+			world.added = true;
+			world.index = _worlds.push(world);
+		}
+		
+		/**
+		 * Removes a world.
+		 * @param	world World to be removed.
+		 */
+		public final function removeWorld(world:World):void
+		{
+			if (!world || !world.added)
+			{
+				throw new Error("World must exist and be added.");
+				return;
+			}
+			
+			_worlds.slice(world.index, 1);
+			
+			for each (var screen:Screen in _screens)
+			{
+				if (screen.target == world.index)
+				{
+					removeScreen(screen);
+				}
+				else if (screen.target > world.index) screen.target --;
+			}
+			
+			
+			world.added = false;
+		}
+		
+		/**
+		 * Changes a world with another.
+		 * All the screens that were rendering the current world, now renders the new one.
+		 * @param	currentWorld	World that will no longer be rendered (added).
+		 * @param	newWorld		World that will replace the current one.
+		 */
+		public final function changeWorld(currentWorld:World, newWorld:World):void
+		{
+			if (!currentWorld || !newWorld || !currentWorld.added || newWorld.added)
+			{
+				throw new Error("Both worlds must exist. The first have to be added but the second one musn't.");
+				return;
+			}
+			
+			newWorld.added = true;
+			newWorld.index = currentWorld.index;
+			
+			_worlds[currentWorld.index] = newWorld;
+			
+			currentWorld.added = false;
+		}
+		
+		
+	//screen functions
+		/**
+		 * Adds an screen that renders the pointed world.
+		 * @param	screen	Screen added.
+		 * @param	target	The world that is rendered.
+		 */
+		public final function addScreen(screen:Screen, target:World):void
+		{
+			if (!target || !screen || !target.added || screen.added)
+			{
+				throw new Error("Both parameters must exist. The first have to not be added but the second one have to.");
+				return;
+			}
+			
+			screen.added = true;
+			screen.index = _screens.push(screen);
+			screen.target = (_worlds.length > target.index) ? target.index : 0;
+		}
+		
+		/**
+		 * Removes an screen.
+		 * @param	screen	The removed screen.
+		 */
+		public final function removeScreen(screen:Screen):void
+		{
+			if (!screen || !screen.added) return;
+			
+			_screens.splice(screen.index, 1);
+			screen.added = false;
+		}
 		
 	//Private event handelers
 		/**
@@ -71,7 +191,7 @@ package net.flashpunk
 			removeEventListener(Event.ADDED_TO_STAGE, onStage);
 			
 			//save the time (like this was a first frame)
-			_lastTime = getTimer();
+			_currentTime = getTimer();
 			
 			//set the stage properties
 			setStageProperties();
@@ -82,7 +202,9 @@ package net.flashpunk
 			//start the main loop
 			if (fixed)
 			{
-				
+				_mainTimer = new Timer(_tickLength);
+				_mainTimer.addEventListener(TimerEvent.TIMER, onTimer);
+				_mainTimer.start();
 			}
 			else
 			{
@@ -92,14 +214,44 @@ package net.flashpunk
 		
 		/**
 		 * @private
-		 * Called every frame in the non-fixed mode.
+		 * Called every possible tick in fixed mode.
 		 * 
-		 * @param	e	Te Event from The EventHandler call (ignored).
+		 * @param	e	The Event from The EventHandler call (ignored).
 		 */
-		private function onFrame(e:Event):void
+		private function onTimer(e:TimerEvent):void
 		{
 			
 		}
+		
+		/**
+		 * @private
+		 * Called every frame in the non-fixed mode.
+		 * 
+		 * @param	e	The Event from The EventHandler call (ignored).
+		 */
+		private function onFrame(e:Event):void
+		{
+			//timming
+			_lastTime = _currentTime;
+			_currentTime = getTimer();
+			_elapsed = _currentTime - _lastTime;
+			
+			//update worlds
+			
+			//render
+		}
+		
+		/**
+		 * @private
+		 * List with all the worlds.
+		 */
+		private var _worlds:Vector.<World> = new Vector.<World>;
+		
+		/**
+		 * @private
+		 * Vector with all the screens.
+		 */
+		private var _screens:Vector.<Screen> = new Vector.<Screen>;
 		
 	//Variables that define the Engine
 		/**
@@ -110,10 +262,15 @@ package net.flashpunk
 		
 		/**
 		 * @private
-		 * Tick rate (frames per second).
+		 * Tick rate (in ticks [frames] per second).
 		 */
 		private var _tickRate:Number;
 		
+		/**
+		 * @private
+		 * The length of a tick (in milliseconds per tick [frame])
+		 */
+		private var _tickLength:Number;
 		
 	//Timming Variables
 		/**
@@ -134,6 +291,18 @@ package net.flashpunk
 		 * The time of the current tick.
 		 */
 		private var _currentTime:Number;
+		
+		/**
+		 * @private
+		 * The Timer class for the fixed mode.
+		 */
+		private var _mainTimer:Timer;
+		
+		/**
+		 * @private
+		 * Used to calculate if it's necesary to render.
+		 */
+		private var _delta:Number = 0;
 	}
 
 }
