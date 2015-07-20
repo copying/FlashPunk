@@ -28,7 +28,7 @@ package net.flashpunk
 		 * @private
 		 * If it's part of the vector in the Engine.
 		 */
-		internal var added:Boolean = false;
+		internal var linked:Boolean = false;
 	}
 
 }

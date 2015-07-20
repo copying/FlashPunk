@@ -86,7 +86,7 @@ package net.flashpunk
 		 */
 		public final function addWorld(world:World):void
 		{
-			if (!world || world.added)
+			if (!world || world.linked)
 			{
 				throw new Error("World must exist and not already be added.");
 				return;
@@ -103,7 +103,7 @@ package net.flashpunk
 		 */
 		public final function removeWorld(world:World):void
 		{
-			if (!world || !world.added)
+			if (!world || !world.linked)
 			{
 				throw new Error("World must exist and be added.");
 				return;
@@ -132,7 +132,7 @@ package net.flashpunk
 		 */
 		public final function changeWorld(currentWorld:World, newWorld:World):void
 		{
-			if (!currentWorld || !newWorld || !currentWorld.added || newWorld.added)
+			if (!currentWorld || !newWorld || !currentWorld.linked || newWorld.linked)
 			{
 				throw new Error("Both worlds must exist. The first have to be added but the second one musn't.");
 				return;
@@ -158,13 +158,13 @@ package net.flashpunk
 		 */
 		public final function addScreen(screen:Screen, target:World):void
 		{
-			if (!target || !screen || !target.added || screen.added)
+			if (!target || !screen || !target.linked || screen.linked)
 			{
 				throw new Error("Both parameters must exist. The first have to not be added but the second one have to.");
 				return;
 			}
 			
-			screen.added = true;
+			screen.linked = true;
 			screen.index = _screens.push(screen);
 			screen.target = (_worlds.length > target.index) ? target.index : 0;
 		}
@@ -175,10 +175,10 @@ package net.flashpunk
 		 */
 		public final function removeScreen(screen:Screen):void
 		{
-			if (!screen || !screen.added) return;
+			if (!screen || !screen.linked) return;
 			
 			_screens.splice(screen.index, 1);
-			screen.added = false;
+			screen.linked = false;
 		}
 		
 	//Private event handelers
