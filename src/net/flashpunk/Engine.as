@@ -112,15 +112,17 @@ package net.flashpunk
 				return;
 			}
 			
+			//Remove the world from the Vector
 			_worlds.slice(world.index, 1);
 			
+			//Correct the target of the screens
 			for each (var screen:Screen in _screens)
 			{
 				if (screen.target == world.index)
 				{
 					removeScreen(screen);
 				}
-				else if (screen.target > world.index) screen.target --;
+				else if (screen.target > world.index) screen.target--;
 			}
 			
 			world.iRemoved();
@@ -169,6 +171,7 @@ package net.flashpunk
 			
 			screen.linked = true;
 			screen.index = _screens.push(screen);
+			//if the target for the world don't exists, it points to the default one.
 			screen.target = (_worlds.length > target.index) ? target.index : 0;
 		}
 		
