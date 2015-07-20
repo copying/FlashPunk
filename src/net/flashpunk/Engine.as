@@ -45,6 +45,9 @@ package net.flashpunk
 		 */
 		public function Engine(screen:Screen, initialWorld:World, frameRate:Number = 60, fixed:Boolean = false) 
 		{
+			//Add global FP.engine variable
+			FP.engine = this;
+			
 			//sets the arguments
 			addWorld(initialWorld || new World);
 			addScreen(screen, _worlds[0]);
@@ -193,6 +196,9 @@ package net.flashpunk
 		{
 			//not called again but to avoid errors we remove it
 			removeEventListener(Event.ADDED_TO_STAGE, onStage);
+			
+			//Add global FP.stage variable
+			FP.stage = stage;
 			
 			//save the time (like this was a first frame)
 			_currentTime = getTimer();
