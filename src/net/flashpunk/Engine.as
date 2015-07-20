@@ -92,8 +92,9 @@ package net.flashpunk
 				return;
 			}
 			
-			world.added = true;
+			world.linked = true;
 			world.index = _worlds.push(world);
+			world.iAdded();
 		}
 		
 		/**
@@ -119,8 +120,8 @@ package net.flashpunk
 				else if (screen.target > world.index) screen.target --;
 			}
 			
-			
-			world.added = false;
+			world.iRemoved();
+			world.linked = false;
 		}
 		
 		/**
@@ -137,12 +138,15 @@ package net.flashpunk
 				return;
 			}
 			
-			newWorld.added = true;
+			newWorld.linked = true;
 			newWorld.index = currentWorld.index;
 			
 			_worlds[currentWorld.index] = newWorld;
 			
-			currentWorld.added = false;
+			currentWorld.iRemoved();
+			newWorld.iAdded();
+			
+			currentWorld.linked = false;
 		}
 		
 		
