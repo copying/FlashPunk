@@ -4,10 +4,10 @@ package net.flashpunk
 	 * Represents any Grpahic
 	 * @author Copying
 	 */
-	public class Grpahic 
+	public class Graphic 
 	{
 		
-		public function Grpahic() 
+		public function Graphic() 
 		{
 			
 		}
