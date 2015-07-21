@@ -209,11 +209,11 @@ package net.flashpunk
 			//not called again but to avoid errors we remove it
 			removeEventListener(Event.ADDED_TO_STAGE, onStage);
 			
-			//Add global FP.stage variable
-			FP.stage = stage;
-			
 			//save the time (like this was a first frame)
 			_currentTime = getTimer();
+			
+			//Add global FP.stage variable
+			FP.stage = stage;
 			
 			//set the stage properties
 			setStageProperties();
@@ -226,6 +226,7 @@ package net.flashpunk
 			{
 				_mainTimer = new Timer(_tickLength);
 				_mainTimer.addEventListener(TimerEvent.TIMER, onTimer);
+				_elapsed = _tickLength / 1000;
 				_mainTimer.start();
 			}
 			else
@@ -243,7 +244,23 @@ package net.flashpunk
 		 */
 		private function onTimer(e:TimerEvent):void
 		{
+			_lastTime = _currentTime;
+			_currentTime = getTimer();
+			_delta += _currentTime - _lastTime;
 			
+			_skipCount = 0;
+			
+			while (_delta >= _tickLength)
+			{
+				_delta -= _tickLength;
+				
+				updateWorlds();
+				
+				_skipCount++;
+				if (maxFrameSkip > 0 && _skipCount >= maxFrameSkip) break;
+			}
+			
+			renderScreens();
 		}
 		
 		/**
@@ -261,9 +278,52 @@ package net.flashpunk
 			_elapsed = _currentTime - _lastTime;
 			
 			//update worlds
+			updateWorlds();
 			
 			//render
+			renderScreens();
 		}
+		
+		
+		/**
+		 * Updates all the worlds of the Engine.
+		 * 
+		 * @private
+		 */
+		private function updateWorlds():void
+		{
+			for each (var w:World in _worlds)
+			{
+				w.iUpdate();
+			}
+		}
+		
+		/**
+		 * Renders all the screens.
+		 * 
+		 * @private
+		 */
+		private function renderScreens():void
+		{
+			
+			for each (var s:Screen in _screens)
+			{
+				s.iBeforeRender();
+			}
+			
+			for each (var s:Screen in _screens)
+			{
+				//render entities graphics.
+				
+			}
+			
+			for each (var s:Screen in _screens)
+			{
+				s.iAfterRender();
+			}
+		}
+		
+		
 		
 		/**
 		 * List with all the worlds.
@@ -337,6 +397,14 @@ package net.flashpunk
 		 * @private
 		 */
 		private var _delta:Number = 0;
+		
+		
+		/**
+		 * How many frames we already skiped.
+		 * 
+		 * @private
+		 */
+		private var _skipCount:uint = 0;
 	}
 
 }
