@@ -18,6 +18,15 @@ package net.flashpunk
 		public function Screen() { }
 		
 		
+		/**
+		 * Called when the screen is added to the engine.
+		 */
+		protected function added():void { }
+		
+		/**
+		 * Called when the screen is removed from the engine.
+		 */
+		protected function removed():void { }
 		
 		/**
 		 * Called before start rendering.
@@ -37,6 +46,24 @@ package net.flashpunk
 		 * Used to finish the rendering (usually show the final result).
 		 */
 		protected function afterRender():void { }
+		
+		
+		
+		/**
+		 * Internally called when the world is added to the engine.
+		 * Calls the protected function.
+		 * 
+		 * @private
+		 */
+		internal function iAdded():void { added(); }
+		
+		/**
+		 * Internally called when the world is removed from the engine.
+		 * Calls the protected function.
+		 * 
+		 * @private
+		 */
+		internal function iRemoved():void { removed(); }
 		
 		/**
 		 * Internal caller for beforeRendering();

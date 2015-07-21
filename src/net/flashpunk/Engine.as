@@ -122,7 +122,10 @@ package net.flashpunk
 				{
 					removeScreen(screen);
 				}
-				else if (screen.target > world.index) screen.target--;
+				else if (screen.target > world.index)
+				{
+					screen.target--;
+				}
 			}
 			
 			world.iRemoved();
@@ -173,6 +176,8 @@ package net.flashpunk
 			screen.index = _screens.push(screen);
 			//if the target for the world don't exists, it points to the default one.
 			screen.target = (_worlds.length > target.index) ? target.index : 0;
+			
+			screen.iAdded();
 		}
 		
 		/**
@@ -184,6 +189,9 @@ package net.flashpunk
 			if (!screen || !screen.linked) return;
 			
 			_screens.splice(screen.index, 1);
+			
+			screen.iRemoved();
+			
 			screen.linked = false;
 		}
 		

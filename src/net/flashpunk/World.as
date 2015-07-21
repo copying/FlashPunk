@@ -9,6 +9,8 @@ package net.flashpunk
 		
 		public function World() { }
 		
+		
+		
 		/**
 		 * Called when the world is added to the engine.
 		 */
@@ -23,6 +25,8 @@ package net.flashpunk
 		 * Called once every tick, before updateing the entities.
 		 */
 		protected function update():void { }
+		
+		
 		
 		/**
 		 * Internally called when the world is added to the engine.
@@ -51,6 +55,8 @@ package net.flashpunk
 			update();
 			//TO DO: update entities
 		}
+		
+		
 		
 		/**
 		 * Index in the vector in the Engine.
