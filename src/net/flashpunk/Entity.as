@@ -12,6 +12,19 @@ package net.flashpunk
 			
 		}
 		
+		/**
+		 * Entitiy right on top of this one.
+		 * 
+		 * @private
+		 */
+		internal var higherEntity:Entity = null;
+		
+		/**
+		 * Entity right below this one.
+		 * 
+		 * @private
+		 */
+		internal var lowerEntity:Entity = null;
 	}
 
 }

@@ -81,6 +81,28 @@ package net.flashpunk
 		 * @private
 		 */
 		internal var linked:Boolean = false;
+		
+		
+		/**
+		 * List with all the layers (shortcut to layers having the index).
+		 * 
+		 * @private
+		 */
+		private var _layers:Vector.<Layer> = new Vector.<Layer>;
+		
+		/**
+		 * Top layer of the World.
+		 * 
+		 * @private
+		 */
+		private var _topLayer:Layer = null;
+		
+		/**
+		 * Bottom layer of the World.
+		 * 
+		 * @private
+		 */
+		private var _bottomLayer:Layer = null;
 	}
 
 }
