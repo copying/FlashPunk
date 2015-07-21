@@ -157,7 +157,6 @@ package net.flashpunk
 			currentWorld.linked = false;
 		}
 		
-		
 	//screen functions
 		/**
 		 * Adds an screen that renders the pointed world.
@@ -313,8 +312,7 @@ package net.flashpunk
 			
 			for each (var s:Screen in _screens)
 			{
-				//render entities graphics.
-				
+				_worlds[s.target].forEachGraphic(s.botTotop, s.iRender);
 			}
 			
 			for each (var s:Screen in _screens)

@@ -10,6 +10,16 @@ package net.flashpunk
 		public function World() { }
 		
 		
+		/**
+		 * Calls the callback for every entity's graphic. Used mainly for rendering.
+		 * @param	botToTop	If the order from the bottom to top (in depth) [true] or from top to bottom [false].
+		 * @param	callback	The callback function. I must have Graphic as the first argument.
+		 */
+		public final function forEachGraphic(botToTop:Boolean, callback:Function):void
+		{
+			//for each...
+			//callback(grpahic);
+		}
 		
 		/**
 		 * Called when the world is added to the engine.

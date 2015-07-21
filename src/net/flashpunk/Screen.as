@@ -88,7 +88,10 @@ package net.flashpunk
 		 */
 		internal function iAfterRender():void { afterRender(); }
 		
-		
+		/**
+		 * If the screen renders from the bottom (in depth) to the top.
+		 */
+		internal var botTotop:Boolean = true;
 		
 		/**
 		 * Index in the vector in the Engine.
