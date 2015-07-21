@@ -27,6 +27,7 @@ package net.flashpunk
 		
 		/**
 		 * Renders the graphic g.
+		 * 
 		 * @param	g	Graphic to be rendered.
 		 */
 		protected function render(g:Graphic):void { }
@@ -38,41 +39,48 @@ package net.flashpunk
 		protected function afterRender():void { }
 		
 		/**
-		 * @private
 		 * Internal caller for beforeRendering();
+		 * 
+		 * @private
 		 */
 		internal function iBeforeRender():void { beforeRender(); }
 		
 		/**
-		 * @private
 		 * Internal caller for rendering(g);
+		 * 
 		 * @param	g	Graphic to be rendered.
+		 * 
+		 * @private
 		 */
 		internal function iRender(g:Graphic):void { render(g); }
 		
 		/**
-		 * @private
 		 * Internal caller for afterRendering();
+		 * 
+		 * @private
 		 */
 		internal function iAfterRender():void { afterRender(); }
 		
 		
 		
 		/**
-		 * @private
 		 * Index in the vector in the Engine.
+		 * 
+		 * @private
 		 */
 		internal var index:uint = 0;
 		
 		/**
-		 * @private
 		 * The index of the targeted world.
+		 * 
+		 * @private
 		 */
 		internal var target:uint = 0;
 		
 		/**
-		 * @private
 		 * If it's part of the vector in the Engine.
+		 * 
+		 * @private
 		 */
 		internal var linked:Boolean = false;
 	}

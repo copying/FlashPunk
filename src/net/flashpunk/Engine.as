@@ -189,11 +189,12 @@ package net.flashpunk
 		
 	//Private event handelers
 		/**
-		 * @private
 		 * Called after the Engine is added to the stage.
 		 * Responsable of configurating the stage and starting the main loop.
 		 * 
 		 * @param	e	The Event from the EventHandler call (ignored).
+		 * 
+		 * @private
 		 */
 		private function onStage(e:Event):void
 		{
@@ -226,10 +227,11 @@ package net.flashpunk
 		}
 		
 		/**
-		 * @private
 		 * Called every possible tick in fixed mode.
 		 * 
 		 * @param	e	The Event from The EventHandler call (ignored).
+		 * 
+		 * @private
 		 */
 		private function onTimer(e:TimerEvent):void
 		{
@@ -237,10 +239,11 @@ package net.flashpunk
 		}
 		
 		/**
-		 * @private
 		 * Called every frame in the non-fixed mode.
 		 * 
 		 * @param	e	The Event from The EventHandler call (ignored).
+		 * 
+		 * @private
 		 */
 		private function onFrame(e:Event):void
 		{
@@ -255,65 +258,75 @@ package net.flashpunk
 		}
 		
 		/**
-		 * @private
 		 * List with all the worlds.
+		 * 
+		 * @private
 		 */
 		private var _worlds:Vector.<World> = new Vector.<World>;
 		
 		/**
-		 * @private
 		 * Vector with all the screens.
+		 * 
+		 * @private
 		 */
 		private var _screens:Vector.<Screen> = new Vector.<Screen>;
 		
 	//Variables that define the Engine
 		/**
-		 * @private
 		 * If it runs in fixed mode.
+		 * 
+		 * @private
 		 */
 		private var _fixed:Boolean;
 		
 		/**
-		 * @private
 		 * Tick rate (in ticks [frames] per second).
+		 * 
+		 * @private
 		 */
 		private var _tickRate:Number;
 		
 		/**
+		 * The length of a tick (in milliseconds per tick [frame]).
+		 * 
 		 * @private
-		 * The length of a tick (in milliseconds per tick [frame])
 		 */
 		private var _tickLength:Number;
 		
 	//Timming Variables
 		/**
-		 * @private
 		 * Time elapsed between this and the last tick in seconds.
 		 * _elapsed = _current - _last;
+		 * 
+		 * @private
 		 */
 		private var _elapsed:Number = 0;
 		
 		/**
-		 * @private
 		 * The time of the last tick.
+		 * 
+		 * @private
 		 */
 		private var _lastTime:Number;
 		
 		/**
-		 * @private
 		 * The time of the current tick.
+		 * 
+		 * @private
 		 */
 		private var _currentTime:Number;
 		
 		/**
-		 * @private
 		 * The Timer class for the fixed mode.
+		 * 
+		 * @private
 		 */
 		private var _mainTimer:Timer;
 		
 		/**
-		 * @private
 		 * Used to calculate if it's necesary to render.
+		 * 
+		 * @private
 		 */
 		private var _delta:Number = 0;
 	}

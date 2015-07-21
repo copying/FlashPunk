@@ -25,23 +25,26 @@ package net.flashpunk
 		protected function update():void { }
 		
 		/**
-		 * @private
 		 * Internally called when the world is added to the engine.
 		 * Calls the protected function.
+		 * 
+		 * @private
 		 */
 		internal function iAdded():void { added(); }
 		
 		/**
-		 * @private
 		 * Internally called when the world is removed from the engine.
 		 * Calls the protected function.
+		 * 
+		 * @private
 		 */
 		internal function iRemoved():void { removed(); }
 		
 		/**
-		 * @private
 		 * Complete update function.
 		 * First it calls the protected update function and then updates all entities.
+		 * 
+		 * @private
 		 */
 		internal function iUpdate():void
 		{
@@ -50,14 +53,16 @@ package net.flashpunk
 		}
 		
 		/**
-		 * @private
 		 * Index in the vector in the Engine.
+		 * 
+		 * @private
 		 */
 		internal var index:uint = 0;
 		
 		/**
-		 * @private
 		 * If it's part of the vector in the Engine.
+		 * 
+		 * @private
 		 */
 		internal var linked:Boolean = false;
 	}
