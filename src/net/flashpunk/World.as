@@ -17,8 +17,28 @@ package net.flashpunk
 		 */
 		public final function forEachGraphic(botToTop:Boolean, callback:Function):void
 		{
-			//for each...
-			//callback(grpahic);
+			var current:Entity = null;
+			
+			if (botToTop)
+			{
+				current = _bottomLayer.bottomEntity;
+				
+				while (current)
+				{
+					callback(current.graphic);
+					current = current.higherEntity;
+				}
+			}
+			else
+			{
+				current = _topLayer.topEntity;
+				
+				while (current)
+				{
+					callback(current.graphic);
+					current = current.lowerEntity;
+				}
+			}
 		}
 		
 		/**

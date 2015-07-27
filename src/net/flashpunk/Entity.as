@@ -68,6 +68,9 @@ package net.flashpunk
 			return true;
 		}
 		
+		private var _graphic:Graphic;
+		public final function get graphic():Graphic { _graphic }
+		protected final function set graphic(g:Graphic):void { _graphic = g; }
 		
 		/**
 		 * Entitiy right on top of this one.
