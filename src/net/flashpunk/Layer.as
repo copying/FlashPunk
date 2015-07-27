@@ -12,7 +12,7 @@ package net.flashpunk
 		public var lowerLayer:Layer = null;
 		
 		public var topEntity:Entity = null;
-		public var bottomENtity:Entity = null;
+		public var bottomEntity:Entity = null;
 		
 		internal var index:uint;
 		
