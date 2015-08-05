@@ -1,6 +1,8 @@
 package net.flashpunk 
 {
+	import flash.display.BitmapData;
 	import flash.geom.Point;
+	
 	/**
 	 * Represents any Grpahic
 	 * @author Copying
@@ -22,10 +24,21 @@ package net.flashpunk
 		 */
 		public var offset:Point;
 		
+		/**
+		 * Contructor.
+		 * @param	offsetX	X coordinate of the offset.
+		 * @param	offsetY	Y coordinate of the offset.
+		 */
 		public function Graphic(offsetX:Number = 0, offsetY:Number = 0) 
 		{
 			offset = new Point(offsetX, offsetY);
 		}
+		
+		/**
+		 * Source to be rendered.
+		 * Override this getter, returning the correct source.
+		 */
+		public function get source():BitmapData { return null; }
 		
 		/**
 		 * Updates the graphic (usually used for animations or particle systems).
