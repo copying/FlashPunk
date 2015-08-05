@@ -1,6 +1,7 @@
 package net.flashpunk 
 {
 	import flash.geom.Point;
+	
 	/**
 	 * Represents a entity with some sort of graphic.
 	 * @author Copying
@@ -51,36 +52,6 @@ package net.flashpunk
 		 * @param	...args	Args to recycle/make the entity.
 		 */
 		protected function recycled(...args):void { }
-		
-		
-		/**
-		 * Called when the entity is updated.
-		 * 
-		 * @private
-		 */
-		internal function iUpdate():void { update(); }
-		
-		/**
-		 * Called when the entity is added to the world.
-		 * 
-		 * @private
-		 */
-		internal function iAdded():void { added(); }
-		
-		/**
-		 * Called when the entity is remved from the world.
-		 * 
-		 * @private
-		 */
-		internal function iRemoved():void { removed(); }
-		
-		/**
-		 * Called when the entity is wanted to be recycled. Ment to be a type of constructor.
-		 * @param	...args	Args to recycle/make the entity.
-		 * 
-		 * @private
-		 */
-		internal function iRecycled(...args):void { recycled.apply(this, args); }
 		
 		
 		
@@ -140,6 +111,37 @@ package net.flashpunk
 			
 			return true;
 		}
+		
+		
+		
+		/**
+		 * Called when the entity is updated.
+		 * 
+		 * @private
+		 */
+		internal function iUpdate():void { update(); }
+		
+		/**
+		 * Called when the entity is added to the world.
+		 * 
+		 * @private
+		 */
+		internal function iAdded():void { added(); }
+		
+		/**
+		 * Called when the entity is remved from the world.
+		 * 
+		 * @private
+		 */
+		internal function iRemoved():void { removed(); }
+		
+		/**
+		 * Called when the entity is wanted to be recycled. Ment to be a type of constructor.
+		 * @param	...args	Args to recycle/make the entity.
+		 * 
+		 * @private
+		 */
+		internal function iRecycled(...args):void { recycled.apply(this, args); }
 		
 		
 		
