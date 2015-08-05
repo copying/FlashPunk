@@ -32,6 +32,24 @@ package net.flashpunk
 		}
 		
 		/**
+		 * Called when the entity is updated.
+		 */
+		protected function update():void { }
+		/**
+		 * Called when the entity is added to the world.
+		 */
+		protected function added():void { }
+		/**
+		 * Called when the entity is remved from the world.
+		 */
+		protected function removed():void { }
+		/**
+		 * Called when the entity is wanted to be recycled. Ment to be a type of constructor.
+		 * @param	...args	Args to recycle/make the entity.
+		 */
+		protected function recycled(...args):void { }
+		
+		/**
 		 * Adds the entity in the same world right on top of this one (same layer).
 		 * 
 		 * @return	If it was possible to add it.
