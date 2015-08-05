@@ -35,19 +35,54 @@ package net.flashpunk
 		 * Called when the entity is updated.
 		 */
 		protected function update():void { }
+		
 		/**
 		 * Called when the entity is added to the world.
 		 */
 		protected function added():void { }
+		
 		/**
 		 * Called when the entity is remved from the world.
 		 */
 		protected function removed():void { }
+		
 		/**
 		 * Called when the entity is wanted to be recycled. Ment to be a type of constructor.
 		 * @param	...args	Args to recycle/make the entity.
 		 */
 		protected function recycled(...args):void { }
+		
+		
+		/**
+		 * Called when the entity is updated.
+		 * 
+		 * @private
+		 */
+		internal function iUpdate():void { update(); }
+		
+		/**
+		 * Called when the entity is added to the world.
+		 * 
+		 * @private
+		 */
+		internal function iAdded():void { added(); }
+		
+		/**
+		 * Called when the entity is remved from the world.
+		 * 
+		 * @private
+		 */
+		internal function iRemoved():void { removed(); }
+		
+		/**
+		 * Called when the entity is wanted to be recycled. Ment to be a type of constructor.
+		 * @param	...args	Args to recycle/make the entity.
+		 * 
+		 * @private
+		 */
+		internal function iRecycled(...args):void { recycled.apply(this, args); }
+		
+		
 		
 		/**
 		 * Adds the entity in the same world right on top of this one (same layer).
@@ -77,6 +112,7 @@ package net.flashpunk
 			return true;
 		}
 		
+		
 		/**
 		 * Adds the entity in the same world right below this one (same layer).
 		 * 
@@ -105,9 +141,22 @@ package net.flashpunk
 			return true;
 		}
 		
+		
+		
+		/**
+		 * Unique Graphic of the entity.
+		 * 
+		 * @private
+		 */
 		private var _graphic:Graphic;
+		
+		/**
+		 * Unique Graphic of the entity.
+		 */
 		public final function get graphic():Graphic { _graphic }
 		protected final function set graphic(g:Graphic):void { _graphic = g; }
+		
+		
 		
 		/**
 		 * Entitiy right on top of this one.
@@ -116,6 +165,7 @@ package net.flashpunk
 		 */
 		internal var higherEntity:Entity = null;
 		
+		
 		/**
 		 * Entity right below this one.
 		 * 
@@ -123,12 +173,14 @@ package net.flashpunk
 		 */
 		internal var lowerEntity:Entity = null;
 		
+		
 		/**
 		 * World wich contains this Entity.
 		 * 
 		 * @private
 		 */
 		internal var world:World = null;
+		
 		
 		/**
 		 * Layer that this entity pertains.
