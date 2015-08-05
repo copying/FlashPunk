@@ -1,15 +1,34 @@
 package net.flashpunk 
 {
+	import flash.geom.Point;
 	/**
 	 * Represents a entity with some sort of graphic.
 	 * @author Copying
 	 */
 	public class Entity 
 	{
+		/**
+		 * If the entity is being updated by the world which contains it.
+		 */
+		public var active:Boolean = true;
 		
-		public function Entity() 
+		/**
+		 * Position of the entity is the world (coordinates).
+		 */
+		public var position:Point;
+		
+		/**
+		 * If the graphic of the entity is visible (renders).
+		 */
+		public final function get visible():Boolean { return _graphic ? _graphic.visible : false };
+		public final function set visible(b:Boolean):void
 		{
-			
+			if (_graphic) _graphic.visible = b;
+		}
+		
+		public function Entity(x:Number = 0, y:Number = 0, graphic:Graphic = null) 
+		{
+			position = new Point(x, y);
 		}
 		
 		/**
