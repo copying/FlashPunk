@@ -156,11 +156,13 @@ package net.flashpunk
 			//call event
 			update();
 			
-			//update all the entities
+			//update all the entities and its graphics
 			var current:Entity = _bottomLayer.bottomEntity;
 			while (current)
 			{
 				if (current.active) current.iUpdate();
+				if (current.graphic && current.graphic.active) current.graphic.iUpdate();
+				
 				current = current.higherEntity;
 			}
 		}
