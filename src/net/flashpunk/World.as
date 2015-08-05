@@ -153,8 +153,16 @@ package net.flashpunk
 		 */
 		internal function iUpdate():void
 		{
+			//call event
 			update();
-			//TO DO: update entities
+			
+			//update all the entities
+			var current:Entity = _bottomLayer.bottomEntity;
+			while (current)
+			{
+				if (current.active) current.iUpdate();
+				current = current.higherEntity;
+			}
 		}
 		
 		
